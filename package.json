@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@types/node": "^20.2.3",
+    "dotenv": "^16.0.3",
+    "openai": "^3.2.1",
+    "redis": "^4.6.6"
+  }
+}
