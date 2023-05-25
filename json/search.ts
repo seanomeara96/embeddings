@@ -3,11 +3,9 @@ import data from "../products.json";
 import dotenv from "dotenv";
 import { Configuration, OpenAIApi } from "openai";
 import { float32Buffer } from "../utils/floatBuffer";
-
 const products = data as any[];
-
 dotenv.config();
-async function main() {
+export async function search() {
   try {
     // This example demonstrates how to use RediSearch to index and query data
     // stored in Redis hashes using vector similarity search.
@@ -15,13 +13,7 @@ async function main() {
     // Inspired by RediSearch Python tests:
     // https://github.com/RediSearch/RediSearch/blob/06e36d48946ea08bd0d8b76394a4e82eeb919d78/tests/pytests/test_vecsim.py#L96
 
-    const client = createClient({
-        password: process.env.REDIS_PASSWORD,
-        socket: {
-          host: process.env.REDIS_HOST,
-          port: parseInt(process.env.REDIS_PORT!),
-        },
-      });
+    const client = createClient({ url: process.env.REDIS_URL });
 
     await client.connect();
 
@@ -31,7 +23,7 @@ async function main() {
 
     const openai = new OpenAIApi(configuration);
 
-    const input = `What products are recomended for protecting dyed hair?`;
+    const input = `Can you give me the URL for the Color Wow Security Shampoo 250ml?`;
 
     const embeddingResponse = await openai.createEmbedding({
       model: "text-embedding-ada-002",
@@ -85,11 +77,11 @@ ${input}
       temperature: 0,
     });
 
-    console.log(response.data.choices[0].text)
+    console.log(response.data.choices[0].text);
 
     await client.quit();
   } catch (err: any) {
-    console.log(err.toJSON());
+    console.log(err);
   }
 }
-main();
+
