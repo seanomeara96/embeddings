@@ -5,7 +5,7 @@ import { Configuration, OpenAIApi } from "openai";
 import { float32Buffer } from "../utils/floatBuffer";
 const products = data as any[];
 dotenv.config();
-export async function search() {
+export async function search(input: string) {
   try {
     // This example demonstrates how to use RediSearch to index and query data
     // stored in Redis hashes using vector similarity search.
@@ -22,8 +22,6 @@ export async function search() {
     });
 
     const openai = new OpenAIApi(configuration);
-
-    const input = `Can you give me the URL for the Color Wow Security Shampoo 250ml?`;
 
     const embeddingResponse = await openai.createEmbedding({
       model: "text-embedding-ada-002",
@@ -77,11 +75,11 @@ ${input}
       temperature: 0,
     });
 
-    console.log(response.data.choices[0].text);
+    client.quit();
 
-    await client.quit();
+    return response.data.choices[0].text;
   } catch (err: any) {
     console.log(err);
   }
 }
-
+search(`Can you give me the URL for the Color Wow Security Shampoo 250ml?`);
