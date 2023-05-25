@@ -1,8 +1,8 @@
 import data from "./products.json";
 import { Configuration, OpenAIApi } from "openai";
-import dotenv from "dotenv";
-import { createClient } from "redis";
 
+import { createClient } from "redis";
+import dotenv from "dotenv";
 dotenv.config();
 
 async function main() {
@@ -19,7 +19,8 @@ async function main() {
     await client.connect();
 
     const products = data as any[];
-    for (let i = 0; i < products.length; i++) {
+    for (let i = 461; i < products.length; i++) {
+      console.log(`${i} / ${products.length}`);
       const product = products[i];
       try {
         const configuration = new Configuration({
@@ -44,13 +45,12 @@ async function main() {
 
         console.log(product);
 
-        await client.json.SET(
-          "product:" + product.id.toString(),
-          ".",
-          JSON.stringify(product)
-        );
+        await client.json.SET("product:" + product.id.toString(), ".", {
+          id: i,
+          embedding: responseData.embedding,
+        });
 
-        break;
+        await new Promise((res) => setTimeout(res, 700));
       } catch (err) {
         console.log(err);
         break;
