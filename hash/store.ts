@@ -1,25 +1,28 @@
-import data from "./products.json";
+import data from "../products.json";
 import { Configuration, OpenAIApi } from "openai";
 
 import { createClient } from "redis";
 import dotenv from "dotenv";
+import { float32Buffer } from "../utils/floatBuffer";
 dotenv.config();
+
+const options = {
+  url: process.env.REDIS_URL,
+};
 
 async function main() {
   try {
-    const client = createClient({
-      password: process.env.REDIS_PASSWORD,
-      socket: {
-        host: "redis-16768.c2.eu-west-1-3.ec2.cloud.redislabs.com",
-        port: 16768,
-      },
-    });
+    const client = createClient(options);
 
     client.on("error", (err) => console.log("Redis Client Error", err));
+
     await client.connect();
 
+    console.log("hello");
+
     const products = data as any[];
-    for (let i = 461; i < products.length; i++) {
+
+    for (let i = 670; i < products.length; i++) {
       console.log(`${i} / ${products.length}`);
       const product = products[i];
       try {
@@ -41,16 +44,11 @@ async function main() {
 
         const [responseData] = embeddingResponse.data.data;
 
-        product.embedding = responseData.embedding;
-
-        console.log(product);
-
-        await client.json.SET("product:" + product.id.toString(), ".", {
-          id: i,
-          embedding: responseData.embedding,
+        await client.hSet("product:" + i, {
+          embedding: float32Buffer(responseData.embedding),
         });
 
-        await new Promise((res) => setTimeout(res, 700));
+        //await new Promise((res) => setTimeout(res, 700));
       } catch (err) {
         console.log(err);
         break;

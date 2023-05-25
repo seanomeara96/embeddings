@@ -1,7 +1,8 @@
-import { createClient, SchemaFieldTypes, VectorAlgorithms } from "redis";
-import data from "./products.json";
+import { createClient } from "redis";
+import data from "../products.json";
 import dotenv from "dotenv";
 import { Configuration, OpenAIApi } from "openai";
+import { float32Buffer } from "../utils/floatBuffer";
 
 const products = data as any[];
 
@@ -15,18 +16,14 @@ async function main() {
     // https://github.com/RediSearch/RediSearch/blob/06e36d48946ea08bd0d8b76394a4e82eeb919d78/tests/pytests/test_vecsim.py#L96
 
     const client = createClient({
-      password: process.env.REDIS_PASSWORD,
-      socket: {
-        host: "redis-16768.c2.eu-west-1-3.ec2.cloud.redislabs.com",
-        port: 16768,
-      },
-    });
+        password: process.env.REDIS_PASSWORD,
+        socket: {
+          host: process.env.REDIS_HOST,
+          port: parseInt(process.env.REDIS_PORT!),
+        },
+      });
 
     await client.connect();
-
-    function float32Buffer(arr: number[]) {
-      return Buffer.from(new Float32Array(arr).buffer);
-    }
 
     const configuration = new Configuration({
       apiKey: process.env.OPENAI_API_KEY,
@@ -91,8 +88,8 @@ ${input}
     console.log(response.data.choices[0].text)
 
     await client.quit();
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    console.log(err.toJSON());
   }
 }
 main();
