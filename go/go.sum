@@ -1,0 +1,11 @@
+github.com/google/go-cmp v0.5.2 h1:X2ev0eStA3AbceY54o37/0PQ/UWqKEiiO2dKL5OPaFM=
+github.com/google/go-cmp v0.5.2/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
+github.com/google/go-querystring v1.1.0 h1:AnCroh3fv4ZBgVIf1Iwtovgjaw/GiKJo8M8yD/fhyJ8=
+github.com/google/go-querystring v1.1.0/go.mod h1:Kcdr2DB4koayq7X8pmAG4sNG59So17icRSOU623lUBU=
+github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
+github.com/sashabaranov/go-openai v1.10.0 h1:uUD3EOKDdGa6geMVbe2Trj9/ckF9sCV5jpQM19f7GM8=
+github.com/sashabaranov/go-openai v1.10.0/go.mod h1:lj5b/K+zjTSFxVLijLSTDZuP7adOgerWeFyZLUhAKRg=
+github.com/seanomeara96/go-bigcommerce v0.0.0-20230606161538-75b65acb303f h1:HoluXIKzzSRKaueYZitSBKHdLSodVq/oV3gwRJ4QUxs=
+github.com/seanomeara96/go-bigcommerce v0.0.0-20230606161538-75b65acb303f/go.mod h1:0AEwLJgOFdsN99Lyi3rvqrow10NTO6BQprLMV5BWmJs=
+golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
